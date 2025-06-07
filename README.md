@@ -1,78 +1,83 @@
 Descrição do Projeto
-Este trabalho tem como objetivo implementar e analisar o desempenho de diferentes tabelas hash em Java, utilizando três funções hash distintas e três tamanhos variados para o vetor da tabela. Além disso, é feita uma análise detalhada do desempenho por meio de gráficos e tabelas geradas a partir dos dados coletados, para comparar inserção, colisões e buscas.
+
+Este trabalho tem como objetivo implementar e analisar o desempenho de diferentes tabelas hash em Java, utilizando três funções hash distintas e três tamanhos variados para o vetor da tabela. Além disso, realizamos uma análise detalhada do desempenho por meio de gráficos e tabelas geradas a partir dos dados coletados, para comparar inserção, colisões e buscas.
 
 Implementação
-A tabela hash foi implementada utilizando encadeamento separado para tratamento de colisões.
 
-Três tamanhos diferentes para o vetor da tabela hash foram escolhidos: 1000, 10000 e 100000.
+Tabela hash com encadeamento separado para tratamento de colisões.
 
-Três funções hash foram implementadas e testadas:
+Três tamanhos para o vetor da tabela hash:
+1000, 10000 e 100000.
 
-Divisão: Hash por resto da divisão do código pelo tamanho da tabela.
+Três funções hash testadas:
 
-Multiplicação: Hash usando a multiplicação por uma constante fracionária e extração da parte fracionária.
+Divisão: resto da divisão do código pelo tamanho da tabela.
 
-Dobramento: Dobramento dos dígitos do código para gerar o índice da tabela.
+Multiplicação: multiplicação por constante fracionária, uso da parte fracionária.
 
-Os dados testados são conjuntos de registros com códigos numéricos de 9 dígitos, gerados aleatoriamente com seed para garantir a repetibilidade e validação.
+Dobramento: soma e dobra dos dígitos do código para gerar índice.
+
+Dados gerados aleatoriamente com seed para garantir repetibilidade.
 
 Conjuntos de Dados
-Foram utilizados três volumes diferentes para avaliação:
 
-1.000.000 (1 milhão) de registros.
+Volumes testados:
 
-5.000.000 (5 milhões) de registros.
+1.000.000 (1 milhão) registros
 
-20.000.000 (20 milhões) de registros.
+5.000.000 (5 milhões) registros
 
-Essa variação permite analisar o comportamento da tabela hash em diferentes escalas de dados.
+20.000.000 (20 milhões) registros
 
 Metodologia de Teste
-Para cada combinação de tamanho da tabela, função hash e conjunto de dados, foram medidas:
 
-O tempo de inserção dos elementos na tabela.
+Para cada combinação (tamanho, função hash, volume), medimos:
 
-O número de colisões ocorridas durante a inserção.
+Tempo de inserção
 
-O tempo de busca dos elementos.
+Número de colisões
 
-O número de comparações feitas durante as buscas.
+Tempo de busca
 
-Para cada busca, foram realizadas pelo menos 5 consultas para assegurar a consistência dos tempos.
+Número de comparações na busca
 
-Os resultados foram exportados para o arquivo resultados.csv.
+Foram realizadas pelo menos 5 buscas por rodada.
+Resultados exportados no arquivo resultados.csv.
 
 Análise dos Resultados
-O script Python analisar_resultados.py gera tabelas e gráficos para facilitar a interpretação dos dados. As principais análises apresentadas são:
 
 1) Tempo Médio de Inserção
-O gráfico de barras mostra que a função Multiplicação tem um desempenho consistente e rápido para inserção.
+   
+A função Multiplicação demonstrou o melhor desempenho geral, com tempos de inserção consistentemente menores em todas as configurações.
 
-A função Divisão também apresenta bom desempenho, ligeiramente mais lenta que Multiplicação em alguns casos.
+A função Divisão, apesar de simples, apresentou tempos maiores, provavelmente devido ao maior número de colisões.
 
-A função Dobramento é a que apresenta maior tempo médio de inserção, principalmente para os maiores tamanhos de dados.
+A função Dobramento mostrou o pior desempenho, refletindo seu maior número de colisões e sobrecarga.
 
 2) Número Médio de Colisões na Inserção
-Usando gráfico de barras agrupadas em escala logarítmica para melhor visualização, foi possível notar:
+   
+Usando escala logarítmica para melhor visualização, a função Divisão gera muito mais colisões que as outras.
 
-A função Divisão gera muito mais colisões que as outras, especialmente em tabelas menores.
+As funções Multiplicação e Dobramento apresentam colisões em níveis similares, mas a multiplicação se destaca pela eficiência.
 
-Multiplicação e Dobramento têm número de colisões bem menores, sendo a multiplicação geralmente a mais eficiente.
+O aumento do tamanho da tabela reduz significativamente as colisões.
 
 3) Tempo Médio de Busca
-A busca é muito rápida em geral, porém:
+   
+A função Divisão apresentou os menores tempos médios de busca, mesmo com mais colisões, sugerindo uma boa distribuição para buscas rápidas.
 
-A função Divisão apresenta o menor tempo médio de busca, ainda que as colisões sejam altas.
+A função Multiplicação manteve tempos estáveis e baixos, reforçando sua eficiência.
 
-Multiplicação mantém tempos médios baixos e estáveis.
+A função Dobramento apresentou tempos maiores, influenciada por mais colisões.
 
-Dobramento tem tempos de busca maiores, consequência do maior número de colisões.
+Conclusão
 
-Quem Foi Melhor e Por Quê?
-Multiplicação mostrou ser a função hash mais balanceada, entregando bom desempenho tanto em inserção quanto em busca, com número reduzido de colisões.
+A função hash de Multiplicação foi a que melhor equilibrou desempenho e número de colisões, sendo recomendada para aplicações que exigem rapidez na inserção e busca.
 
-Divisão teve o pior desempenho em termos de colisões, mas como o encadeamento trata bem as colisões, o tempo de busca não ficou muito comprometido.
+A função Divisão é simples e eficiente na busca, mas sofre com colisões que impactam inserções.
 
-Dobramento apresentou pior desempenho em tempo, refletindo seu maior número de colisões e buscas mais lentas.
+A função Dobramento teve desempenho inferior devido a mais colisões.
 
-O tamanho da tabela influencia diretamente o número de colisões: tabelas maiores resultam em menos colisões e tempos melhores.
+O tamanho da tabela é crucial para o desempenho, pois tabelas maiores apresentam menos colisões e melhor performance.
+
+A escolha da função hash e do tamanho da tabela deve considerar o volume e as características dos dados para otimização.
